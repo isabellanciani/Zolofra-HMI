@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HMI Zolofra | Recarga de Agua e Hielo</title>
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+	<div class="background-orb background-orb--one"></div>
+	<div class="background-orb background-orb--two"></div>
+	<div class="background-grid"></div>
+
+	<main class="shell">
+		<section class="hero-card panel">
+			<div class="top-strip">
+				<div>
+					
+					<h1>Zolofra HMI · Plataforma operativa</h1>
+					<p class="subtitle">Suministro, producción y registro diario.</p>
+				</div>
+				<div class="logo-box" aria-label="Espacio reservado para el logo">
+					LOGO
+				</div>
+			</div>
+
+			<div class="status-ribbon">
+				<div class="ribbon-item">
+					<span>Estado de uso</span>
+					<strong>Operativo</strong>
+				</div>
+				<div class="ribbon-item">
+					<span>Recarga</span>
+					<strong>Litros y precio</strong>
+				</div>
+				<div class="ribbon-item">
+					<span>Registro</span>
+					<strong id="systemStatus">Activo</strong>
+				</div>
+			</div>
+		</section>
+
+		<section id="appContent" class="app-content panel">
+			<div class="tabs" role="tablist" aria-label="Secciones HMI">
+				<button class="tab active" data-tab="recarga" type="button">Recarga de agua</button>
+				<button class="tab" data-tab="historial" type="button">Historial diario</button>
+				<button class="tab" data-tab="ayuda" type="button">Modo de uso</button>
+			</div>
+
+			<section id="recarga" class="tab-panel active" role="tabpanel">
+				<div class="control-layout">
+					<article class="card card-main glass-card">
+						<div class="card-header">
+							<div>
+								<h2>Control de suministro</h2>
+							</div>
+						</div>
+
+						<div class="workflow">
+							<div class="workflow-step is-waiting">
+								<span>1</span>
+								<strong>Ingreso del pedido</strong>
+								<small>Litros solicitados</small>
+							</div>
+							<div class="workflow-step is-waiting">
+								<span>2</span>
+								<strong>Botellón presente</strong>
+								<small>Detección activa</small>
+							</div>
+							<div class="workflow-step is-waiting">
+								<span>3</span>
+								<strong>Suministro activo</strong>
+								<small>Proceso en marcha</small>
+							</div>
+						</div>
+
+						<div class="field-grid">
+							<label>
+								Litros solicitados
+								<input id="litersInput" type="number" min="1" step="1" value="20">
+							</label>
+							<label>
+								Precio total (Bs)
+								<input id="priceOutput" type="text" value="0.00" readonly>
+							</label>
+						</div>
+
+						<div class="actions">
+							<button id="bottleToggleBtn" class="btn btn-tertiary" type="button">Botellón presente</button>
+							<button id="startBtn" class="btn btn-primary" type="button">Iniciar recarga</button>
+							<button id="stopBtn" class="btn btn-secondary" type="button">Detener </button>
+						</div>
+
+						<div class="sensor-grid">
+							<div class="sensor-card glow-card">
+								<span>Botellón detectado</span>
+								<strong id="bottleStatus" class="state state-off">No detectado</strong>
+							</div>
+							<div class="sensor-card glow-card">
+								<span>Proceso</span>
+								<strong id="processStatus" class="state state-off">En espera</strong>
+							</div>
+							<div class="sensor-card glow-card">
+								<span>Tiempo estimado</span>
+								<strong id="timeStatus">0 s</strong>
+							</div>
+						</div>
+
+						<p id="progressText" class="process-note">Estado del proceso.</p>
+					</article>
+
+					<aside class="side-stack side-right">
+						<article class="metric-card accent-aqua glass-card">
+							<span>Litros suministrados hoy</span>
+							<strong id="dailyLiters">0 L</strong>
+						</article>
+						
+						<article class="metric-card accent-warm glass-card">
+							<span>Bolsas de hielo producidas hoy</span>
+							<strong id="dailyBags">0</strong>
+							
+						</article>
+
+						<article class="metric-card accent-dark glass-card">
+							<span>Lectura operativa</span>
+							<div class="mini-metrics">
+								<div>
+									<small>Recarga</small>
+									<strong>Lista para usar</strong>
+								</div>
+								<div>
+									<small>Hielo</small>
+									<strong>Registro simple</strong>
+								</div>
+							</div>
+						</article>
+					</aside>
+				</div>
+			</section>
+
+			<section id="historial" class="tab-panel" role="tabpanel">
+				<article class="card glass-card log-panel-card">
+					<div class="card-header">
+						<div>
+							<p class="mini-title">Bitácora</p>
+							<h2>Registro diario</h2>
+						</div>
+						<button id="clearHistoryBtn" class="btn btn-secondary" type="button">Limpiar historial</button>
+					</div>
+					<div class="table-wrap">
+						<table>
+							<thead>
+								<tr>
+									<th>Fecha</th>
+									<th>Litros suministrados</th>
+									<th>Bolsas de hielo</th>
+								</tr>
+							</thead>
+							<tbody id="historyBody"></tbody>
+						</table>
+					</div>
+				</article>
+			</section>
+
+			<section id="ayuda" class="tab-panel" role="tabpanel">
+				<article class="card glass-card help-panel">
+					<div class="card-header">
+						<div>
+							<p class="mini-title">Instrucciones</p>
+							<h2>Modo de uso del sistema</h2>
+						</div>
+						<span class="badge">Guía</span>
+					</div>
+					<div class="help-grid">
+						<div class="help-step">
+							<span>1</span>
+							<strong>Ingrese los litros requeridos</strong>
+						</div>
+						<div class="help-step">
+							<span>2</span>
+							<strong>Marque que el botellón está presente</strong>
+						</div>
+						<div class="help-step">
+							<span>3</span>
+							<strong>Pulse iniciar para comenzar la recarga</strong>
+						</div>
+						<div class="help-step">
+							<span>4</span>
+							<strong>Use detener solo si requiere parar el proceso</strong>
+						</div>
+						<div class="help-step">
+							<span>5</span>
+							<strong>Revise el historial diario en la segunda pestaña</strong>
+						</div>
+						<div class="help-step">
+							<span>6</span>
+							<strong>Consulte aquí cualquier duda operativa</strong>
+						</div>
+					</div>
+				</article>
+			</section>
+		</section>
+	</main>
+
+	<script src="js/app.js"></script>
+</body>
+</html>
