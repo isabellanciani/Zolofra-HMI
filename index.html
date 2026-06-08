@@ -1,207 +1,174 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>HMI Zolofra | Recarga de Agua e Hielo</title>
-	<link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Zolofra Marine HMI | Control de Recarga</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiByeD0iNiIgZmlsbD0iIzBBMEYxQSIvPjxwYXRoIGQ9Ik0xMiAyLjNDMTIgMi4zIDYgOS4yIDYgMTRjMCAzLjMxIDIuNjkgNiA2IDZzNi0yLjY5IDYtNmMwLTQuOC02LTExLjctNi0xMS43WiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNkNBMERDIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNOSAxNi41YzAtMS41IDEuNS0yLjUgMi41LTIuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDBEMjhGIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-	<div class="background-orb background-orb--one"></div>
-	<div class="background-orb background-orb--two"></div>
-	<div class="background-grid"></div>
+    <div class="marine-bg-gradient"></div>
+    <div class="grid-overlay"></div>
 
-	<main class="shell">
-		<section class="hero-card panel">
-			<div class="top-strip">
-				<div>
-					
-					<h1>Zolofra HMI · Plataforma operativa</h1>
-					<p class="subtitle">Suministro, producción y registro diario.</p>
-				</div>
-				<div class="logo-box" aria-label="Espacio reservado para el logo">
-					LOGO
-				</div>
-			</div>
+    <main class="dashboard">
+        <header class="hmi-header">
+            <div class="vessel-info">
+                <h1>ZOLOFRA<span class="accent"> SISTEMA HMI</span></h1>
+                <p class="subtitle">SISTEMA DE DOSIFICACIÓN · HIELO Y AGUA</p>
+            </div>
+            <div class="status-panel">
+                <div class="time-data" id="liveTime">--:--:--</div>
+            </div>
+        </header>
 
-			<div class="status-ribbon">
-				<div class="ribbon-item">
-					<span>Estado de uso</span>
-					<strong>Operativo</strong>
-				</div>
-				<div class="ribbon-item">
-					<span>Recarga</span>
-					<strong>Litros y precio</strong>
-				</div>
-				<div class="ribbon-item">
-					<span>Registro</span>
-					<strong id="systemStatus">Activo</strong>
-				</div>
-			</div>
-		</section>
+        <div class="tabs-container">
+            <div class="tabs marine-tabs" role="tablist">
+                <button class="tab active" data-tab="recarga">SUMINISTRO</button>
+                <button class="tab" data-tab="historial">HISTORIAL</button>
+                <button class="tab" data-tab="ayuda">MODO DE USO</button>
+            </div>
 
-		<section id="appContent" class="app-content panel">
-			<div class="tabs" role="tablist" aria-label="Secciones HMI">
-				<button class="tab active" data-tab="recarga" type="button">Recarga de agua</button>
-				<button class="tab" data-tab="historial" type="button">Historial diario</button>
-				<button class="tab" data-tab="ayuda" type="button">Modo de uso</button>
-			</div>
+            <section id="recarga" class="tab-panel active">
+                <div class="main-grid">
+                    <div class="control-column">
+                        <div class="marine-card engine-panel">
+                            <div class="card-header">
+                                <div class="header-badge">CONTROL DE SUMINISTRO</div>
+                            </div>
+                            <div class="workflow-marine">
+                                <div class="step-item" data-step="1">
+                                    <span class="step-num">01</span>
+                                    <strong>LITROS</strong>
+                                    <small>programados</small>
+                                </div>
+                                <div class="step-item" data-step="2">
+                                    <span class="step-num">02</span>
+                                    <strong>BOTELLÓN</strong>
+                                    <small>detección</small>
+                                </div>
+                                <div class="step-item" data-step="3">
+                                    <span class="step-num">03</span>
+                                    <strong>SUMINISTRO</strong>
+                                    <small>activo</small>
+                                </div>
+                            </div>
 
-			<section id="recarga" class="tab-panel active" role="tabpanel">
-				<div class="control-layout">
-					<article class="card card-main glass-card">
-						<div class="card-header">
-							<div>
-								<h2>Control de suministro</h2>
-							</div>
-						</div>
+                            <div class="param-grid">
+                                <div class="param-card">
+                                    <label>LITROS DE AGUA</label>
+                                    <div class="value-with-unit">
+                                        <input id="litersInput" type="number" min="1" step="1" value="20">
+                                        <span>L</span>
+                                    </div>
+                                </div>
+                                <div class="param-card">
+                                    <label>PRECIO TOTAL</label>
+                                    <div class="value-with-unit">
+                                        <input id="priceOutput" type="text" readonly value="0.00">
+                                        <span>Bs</span>
+                                    </div>
+                                </div>
+                            </div>
 
-						<div class="workflow">
-							<div class="workflow-step is-waiting">
-								<span>1</span>
-								<strong>Ingreso del pedido</strong>
-								<small>Litros solicitados</small>
-							</div>
-							<div class="workflow-step is-waiting">
-								<span>2</span>
-								<strong>Botellón presente</strong>
-								<small>Detección activa</small>
-							</div>
-							<div class="workflow-step is-waiting">
-								<span>3</span>
-								<strong>Suministro activo</strong>
-								<small>Proceso en marcha</small>
-							</div>
-						</div>
+                            <div class="sensor-cluster">
+                                <div class="sensor-item">
+                                    <span>BOTELLÓN</span>
+                                    <strong id="bottleStatus" class="sensor-val">NO DETECTADO</strong>
+                                </div>
+                                <div class="sensor-item">
+                                    <span>ESTADO DE LA BOMBA</span>
+                                    <strong id="processStatus" class="sensor-val">EN ESPERA</strong>
+                                </div>
+                                <div class="sensor-item">
+                                    <span>TIEMPO RESTANTE</span>
+                                    <strong id="timeStatus" class="sensor-val timer">0 s</strong>
+                                </div>
+                            </div>
 
-						<div class="field-grid">
-							<label>
-								Litros solicitados
-								<input id="litersInput" type="number" min="1" step="1" value="20">
-							</label>
-							<label>
-								Precio total (Bs)
-								<input id="priceOutput" type="text" value="0.00" readonly>
-							</label>
-						</div>
+                            <div class="button-bank">
+                                <button id="bottleToggleBtn" class="marine-btn blue">VERIFICAR BOTELLÓN</button>
+                                <button id="startBtn" class="marine-btn green">INICIAR RECARGA</button>
+                                <button id="stopBtn" class="marine-btn red">DETENER</button>
+                            </div>
 
-						<div class="actions">
-							<button id="bottleToggleBtn" class="btn btn-tertiary" type="button">Botellón presente</button>
-							<button id="startBtn" class="btn btn-primary" type="button">Iniciar recarga</button>
-							<button id="stopBtn" class="btn btn-secondary" type="button">Detener </button>
-						</div>
+                            <div class="process-feedback">
+                                <p id="progressText">Sistema listo. Verifique contenedor.</p>
+                            </div>
+                        </div>
+                    </div>
 
-						<div class="sensor-grid">
-							<div class="sensor-card glow-card">
-								<span>Botellón detectado</span>
-								<strong id="bottleStatus" class="state state-off">No detectado</strong>
-							</div>
-							<div class="sensor-card glow-card">
-								<span>Proceso</span>
-								<strong id="processStatus" class="state state-off">En espera</strong>
-							</div>
-							<div class="sensor-card glow-card">
-								<span>Tiempo estimado</span>
-								<strong id="timeStatus">0 s</strong>
-							</div>
-						</div>
+                    <div class="metrics-column">
+                        <div class="marine-card metrics-cluster">
+                            <div class="card-header">
+                                <div class="header-badge">PRODUCCIÓN HOY</div>
+                            </div>
+                            <div class="metric-row">
+                                <div class="metric-block">
+                                    <span class="metric-label">AGUA SUMINISTRADA</span>
+                                    <strong id="dailyLiters">0 L</strong>
+                                    <div class="mini-bar" style="width: 0%;"></div>
+                                </div>
+                                <div class="metric-block">
+                                    <span class="metric-label">BOLSAS DE HIELO</span>
+                                    <strong id="dailyBags">0</strong>
+                                    <div class="mini-bar" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                        </div>
 
-						<p id="progressText" class="process-note">Estado del proceso.</p>
-					</article>
+                        <div class="marine-card tank-status">
+                            <div class="card-header">
+                                <div class="header-badge">TRAZABILIDAD</div>
+                            </div>
+                            <div class="tank-levels">
+                                <div class="tank">
+                                    <span>REGISTROS ACTIVOS</span>
+                                    <div class="level-value" id="historyCountDisplay">0</div>
+                                </div>
+                                <div class="tank">
+                                    <span>MODO OPERATIVO</span>
+                                    <div class="level-value">AUTOMÁTICO</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-					<aside class="side-stack side-right">
-						<article class="metric-card accent-aqua glass-card">
-							<span>Litros suministrados hoy</span>
-							<strong id="dailyLiters">0 L</strong>
-						</article>
-						
-						<article class="metric-card accent-warm glass-card">
-							<span>Bolsas de hielo producidas hoy</span>
-							<strong id="dailyBags">0</strong>
-							
-						</article>
+            <section id="historial" class="tab-panel">
+                <div class="marine-card full-log">
+                    <div class="card-header">
+                        <div class="header-badge">REGISTRO DIARIO (ÚLTIMOS EVENTOS)</div>
+                        <button id="clearHistoryBtn" class="marine-btn small clear">LIMPIAR HISTORIAL</button>
+                    </div>
+                    <div class="table-wrap-marine">
+                        <table class="marine-table">
+                            <thead>
+                                <tr><th>FECHA</th><th>LITROS</th><th>BOLSAS HIELO</th></tr>
+                            </thead>
+                            <tbody id="historyBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
-						<article class="metric-card accent-dark glass-card">
-							<span>Lectura operativa</span>
-							<div class="mini-metrics">
-								<div>
-									<small>Recarga</small>
-									<strong>Lista para usar</strong>
-								</div>
-								<div>
-									<small>Hielo</small>
-									<strong>Registro simple</strong>
-								</div>
-							</div>
-						</article>
-					</aside>
-				</div>
-			</section>
+            <section id="ayuda" class="tab-panel">
+                <div class="marine-card help-card">
+                    <div class="card-header"><div class="header-badge">PROCEDIMIENTO ESTÁNDAR</div></div>
+                    <div class="help-marine-grid">
+                        <div class="help-step"><span>1</span> Ingresar litros (campo digital)</div>
+                        <div class="help-step"><span>2</span> Presionar "VERIFICAR BOTELLÓN"</div>
+                        <div class="help-step"><span>3</span> "INICIAR RECARGA" → bomba activa</div>
+                        <div class="help-step"><span>4</span> Detención automática al completar volumen</div>
+                        <div class="help-step"><span>5</span> Revisar bitácora para trazabilidad</div>
+                        <div class="help-step"><span>6</span> Botón DETENER solo en emergencia</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
 
-			<section id="historial" class="tab-panel" role="tabpanel">
-				<article class="card glass-card log-panel-card">
-					<div class="card-header">
-						<div>
-							<p class="mini-title">Bitácora</p>
-							<h2>Registro diario</h2>
-						</div>
-						<button id="clearHistoryBtn" class="btn btn-secondary" type="button">Limpiar historial</button>
-					</div>
-					<div class="table-wrap">
-						<table>
-							<thead>
-								<tr>
-									<th>Fecha</th>
-									<th>Litros suministrados</th>
-									<th>Bolsas de hielo</th>
-								</tr>
-							</thead>
-							<tbody id="historyBody"></tbody>
-						</table>
-					</div>
-				</article>
-			</section>
-
-			<section id="ayuda" class="tab-panel" role="tabpanel">
-				<article class="card glass-card help-panel">
-					<div class="card-header">
-						<div>
-							<p class="mini-title">Instrucciones</p>
-							<h2>Modo de uso del sistema</h2>
-						</div>
-						<span class="badge">Guía</span>
-					</div>
-					<div class="help-grid">
-						<div class="help-step">
-							<span>1</span>
-							<strong>Ingrese los litros requeridos</strong>
-						</div>
-						<div class="help-step">
-							<span>2</span>
-							<strong>Marque que el botellón está presente</strong>
-						</div>
-						<div class="help-step">
-							<span>3</span>
-							<strong>Pulse iniciar para comenzar la recarga</strong>
-						</div>
-						<div class="help-step">
-							<span>4</span>
-							<strong>Use detener solo si requiere parar el proceso</strong>
-						</div>
-						<div class="help-step">
-							<span>5</span>
-							<strong>Revise el historial diario en la segunda pestaña</strong>
-						</div>
-						<div class="help-step">
-							<span>6</span>
-							<strong>Consulte aquí cualquier duda operativa</strong>
-						</div>
-					</div>
-				</article>
-			</section>
-		</section>
-	</main>
-
-	<script src="js/app.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
