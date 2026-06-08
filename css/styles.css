@@ -574,11 +574,169 @@ input[type=number] {
     color: #FF8A8A !important;
 }
 
+@media (max-width: 1024px) {
+    .main-grid {
+        gap: 0.8rem;
+    }
+    .marine-card {
+        padding: 1rem;
+    }
+    .metric-block strong {
+        font-size: 1.6rem;
+    }
+    .value-with-unit input {
+        font-size: 1.3rem;
+    }
+}
+
 @media (max-width: 900px) {
-    .main-grid { grid-template-columns: 1fr; }
-    .dashboard { overflow-y: auto; }
-    body { overflow-y: auto; height: auto; }
-    .dashboard { height: auto; }
-    .help-marine-grid { grid-template-columns: 1fr; }
-    .button-bank { gap: 6px; }
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+    .dashboard {
+        overflow-y: auto;
+        height: auto;
+        padding: 0.8rem;
+    }
+    body {
+        overflow-y: auto;
+        height: auto;
+    }
+    .help-marine-grid {
+        grid-template-columns: 1fr;
+    }
+    .button-bank {
+        gap: 8px;
+    }
+    .sensor-cluster {
+        gap: 0.6rem;
+    }
+    .workflow-marine {
+        gap: 0.6rem;
+    }
+    .marine-tabs {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .tab {
+        padding: 6px 18px;
+        font-size: 0.75rem;
+    }
+    .hmi-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 0.8rem;
+    }
+    .status-panel {
+        align-self: center;
+        width: fit-content;
+    }
+    .time-data {
+        font-size: 1rem;
+    }
+    .vessel-info h1 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .dashboard {
+        padding: 0.5rem;
+        gap: 0.7rem;
+    }
+    .tabs-container {
+        padding: 0.5rem;
+    }
+    .marine-card {
+        padding: 0.8rem;
+        border-radius: 20px;
+    }
+    .workflow-marine {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    .step-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 12px;
+    }
+    .step-item strong {
+        font-size: 0.75rem;
+        margin: 0;
+    }
+    .step-item small {
+        font-size: 0.6rem;
+    }
+    .step-num {
+        margin-bottom: 0;
+        width: 24px;
+        font-size: 0.7rem;
+    }
+    .param-grid {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+    }
+    .sensor-cluster {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    .button-bank {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    .marine-btn {
+        padding: 10px 0;
+        font-size: 0.65rem;
+    }
+    .metric-block strong {
+        font-size: 1.4rem;
+    }
+    .metric-block {
+        padding: 0.6rem;
+    }
+    .tank {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 6px;
+    }
+    .card-header {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+    .clear-history-btn {
+        align-self: flex-start;
+    }
+    .table-wrap-marine {
+        overflow-x: auto;
+    }
+    .marine-table {
+        min-width: 300px;
+    }
+    .help-step {
+        padding: 8px;
+    }
+    .help-step span {
+        width: 24px;
+        height: 24px;
+        font-size: 0.75rem;
+    }
+    .process-feedback p {
+        font-size: 0.7rem;
+    }
+    .header-badge {
+        font-size: 0.6rem;
+    }
+    .subtitle {
+        font-size: 0.6rem;
+    }
+    .sensor-val {
+        font-size: 0.75rem;
+    }
+    .sensor-val.timer {
+        font-size: 0.9rem;
+    }
 }
